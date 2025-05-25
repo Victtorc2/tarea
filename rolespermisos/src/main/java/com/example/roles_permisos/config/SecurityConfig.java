@@ -39,7 +39,7 @@ public class SecurityConfig {
                         .requestMatchers("/tareas/por-empleado/**").hasAnyRole("ADMIN", "COORDINADOR", "SECRETARIO") // consulta
                         .requestMatchers("/tareas/**").hasRole("ADMIN") // gestión completa (crear, editar, eliminar)
 
-                        .requestMatchers("/empleados/listar").hasAnyRole("COORDINADOR", "ADMIN")
+                        .requestMatchers("/empleados/listar").hasAnyRole("COORDINADOR", "ADMIN", "SECRETARIO") // consulta
                         .requestMatchers("/empleados/**").hasRole("ADMIN")
 
                         .requestMatchers("/horarios/asignar").hasRole("ADMIN")

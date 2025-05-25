@@ -13,7 +13,7 @@
     </div>
 
     <!-- Solo coordinador puede ver la tabla con la lista -->
-<div sec:authorize="hasAnyRole('COORDINADOR', 'ADMIN')">
+<div sec:authorize="hasAnyRole('COORDINADOR', 'ADMIN', 'SECRETARIO')">
         <table class="table table-striped">
             <thead>
                 <tr>
