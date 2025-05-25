@@ -1,0 +1,26 @@
+<div th:replace="~{fragments/header :: header}"></div>
+
+<h2>Tareas</h2>
+<div sec:authorize="hasRole('ADMIN')">
+    <a th:href="@{/tareas/asignar}" class="btn btn-primary mb-3">Asignar Tarea</a>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Descripción</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+            <th>Empleado</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="tarea : ${tareas}">
+            <td th:text="${tarea.descripcion}"></td>
+            <td th:text="${tarea.estado}"></td>
+            <td th:text="${#temporals.format(tarea.fecha, 'dd/MM/yyyy')}"></td>
+            <td th:text="${tarea.empleado.nombre}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<div th:replace="~{fragments/footer :: footer}"></div>

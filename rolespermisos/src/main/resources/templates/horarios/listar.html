@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <a href="/horarios/asignar">Asignar horario</a>
+      </div>
+<table>
+  <thead>
+    <tr>
+      <th>Día</th>
+      <th>Hora Inicio</th>
+      <th>Hora Fin</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="h : ${horarios}">
+      <td th:text="${h.dia}"></td>
+      <td th:text="${h.horaInicio}"></td>
+      <td th:text="${h.horaFin}"></td>
+      <td sec:authorize="hasRole('ROLE_COORDINADOR')">
+        <a th:href="@{'/horarios/editar/' + ${h.id}}">Editar</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+        <div>TODO write content</div>
+    </body>
+</html>

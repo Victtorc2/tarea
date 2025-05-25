@@ -1,0 +1,21 @@
+<div th:replace="~{fragments/header :: header}"></div>
+
+<h2>Resultados de Consulta</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Descripción</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="tarea : ${tareas}">
+            <td th:text="${tarea.descripcion}"></td>
+            <td th:text="${tarea.estado}"></td>
+            <td th:text="${#temporals.format(tarea.fecha, 'dd/MM/yyyy')}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
