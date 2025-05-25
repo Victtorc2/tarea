@@ -33,6 +33,12 @@
                     <td th:text="${tarea.estado}"></td>
                     <td th:text="${#temporals.format(tarea.fecha, 'dd/MM/yyyy')}"></td>
                     <td th:text="${tarea.empleado.nombre}"></td>
+                    <td>
+                         <a th:if="${#authorization.expression('hasRole(''ROLE_COORDINADOR'')')}"
+                       th:href="@{/horarios/editar/{id}(id=${horario.id})}">
+                        Editar
+                    </a>
+                    </td>
                 </tr>
             </tbody>
         </table>

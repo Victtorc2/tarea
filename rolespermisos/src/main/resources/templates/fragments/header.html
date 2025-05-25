@@ -1,52 +1,54 @@
 <!-- header.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
     <title>Menú Admin</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
+
 <body>
-<div th:fragment="adminMenu">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" th:href="@{/admin/dashboard}">Gestión CRUD</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <div th:fragment="adminMenu">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" th:href="@{/admin/dashboard}">Gestión CRUD</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                    <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                        <a class="nav-link" th:href="@{/empleados}">Gestión de Empleados</a>
-                    </li>
-                    <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                        <a class="nav-link" th:href="@{/tareas}"> Gestión de Tareas</a>
-                    </li>
-                    <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                        <a class="nav-link" th:href="@{/horarios/asignar}">Asignar Horario</a>
-                    </li>
+                        <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a class="nav-link" th:href="@{/empleados}">Gestión de Empleados</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a class="nav-link" th:href="@{/tareas}"> Gestión de Tareas</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a class="nav-link" th:href="@{/horarios/asignar}">Asignar Horario</a>
+                        </li>
 
-                    <li class="nav-item" sec:authorize="hasAnyRole('ROLE_COORDINADOR', 'ROLE_SECRETARIO')">
-                        <a class="nav-link" th:href="@{/horarios}">Ver Horarios</a>
-                    </li>
-                    <li class="nav-item" sec:authorize="hasAnyRole('ROLE_COORDINADOR', 'ROLE_SECRETARIO')">
-                        <a class="nav-link" th:href="@{/empleados}">Ver Empleados</a>
-                    </li>
-                </ul>
+                        <li class="nav-item" sec:authorize="hasAnyRole('ROLE_COORDINADOR', 'ROLE_SECRETARIO')">
+                            <a class="nav-link" th:href="@{/horarios}">Ver Horarios</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasAnyRole('ROLE_COORDINADOR', 'ROLE_SECRETARIO')">
+                            <a class="nav-link" th:href="@{/empleados/listar}">Ver Empleados</a>
+                        </li>
 
-                <form th:action="@{/logout}" method="post" class="d-flex">
-                    <button class="btn btn-outline-light" type="submit">Cerrar Sesión</button>
-                </form>
+                    </ul>
+
+                    <form th:action="@{/logout}" method="post" class="d-flex">
+                        <button class="btn btn-outline-light" type="submit">Cerrar Sesión</button>
+                    </form>
+                </div>
             </div>
-        </div>
-    </nav>
-</div>
+        </nav>
+    </div>
 
-<!-- Si lo estás usando como fragmento, este <body> se cierra en la vista que lo usa -->
+    <!-- Si lo estás usando como fragmento, este <body> se cierra en la vista que lo usa -->
 </body>
+
 </html>

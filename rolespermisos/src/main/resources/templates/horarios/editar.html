@@ -1,15 +1,37 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Horario</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+    <h1>Editar Horario</h1>
+    <form th:action="@{/horarios/editar/{id}(id=${horario.id})}" method="post" th:object="${horario}">
+        <label>Día:</label>
+        <input type="text" th:field="*{dia}" required />
+        <br/>
+
+        <label>Hora Inicio:</label>
+        <input type="time" th:field="*{horaInicio}" required />
+        <br/>
+
+        <label>Hora Fin:</label>
+        <input type="time" th:field="*{horaFin}" required />
+        <br/>
+
+        <label>Empleado:</label>
+        <select name="empleadoId" required>
+            <option th:each="empleado : ${empleados}"
+                    th:value="${empleado.id}"
+                    th:text="${empleado.nombre}"
+                    th:selected="${empleado.id} == ${horario.empleado.id}">
+            </option>
+        </select>
+        <br/>
+
+        <button type="submit">Guardar</button>
+        <a th:href="@{/horarios}">Cancelar</a>
+    </form>
+</body>
 </html>

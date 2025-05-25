@@ -30,27 +30,28 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/static/**").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/coordinador/**").hasRole("COORDINADOR")
-                .requestMatchers("/secretario/**").hasRole("SECRETARIO")
-                .requestMatchers("/empleados/**").hasRole("ADMIN")
-                .requestMatchers("/horarios/asignar").hasRole("ADMIN")
-                .requestMatchers("/horarios/editar/**").hasRole("COORDINADOR")
-                .requestMatchers("/horarios").hasAnyRole("COORDINADOR", "SECRETARIO","ADMIN")
-                .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
-                .loginPage("/login")
-                .defaultSuccessUrl("/home", true)
-                .permitAll()
-            )
-            .logout(logout -> logout
-                .logoutSuccessUrl("/login?logout")
-                .permitAll()
-            )
-            .userDetailsService(empleadoDetailsService); // ¡Aquí es donde debe ir!
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/login", "/static/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/coordinador/**").hasRole("COORDINADOR")
+                        .requestMatchers("/secretario/**").hasRole("SECRETARIO")
+
+
+                        .requestMatchers("/empleados/listar").hasAnyRole("COORDINADOR", "ADMIN")
+                        .requestMatchers("/empleados/**").hasRole("ADMIN")
+
+                        .requestMatchers("/horarios/asignar").hasRole("ADMIN")
+                        .requestMatchers("/horarios/editar/**").hasRole("COORDINADOR")
+                        .requestMatchers("/horarios").hasAnyRole("COORDINADOR", "SECRETARIO", "ADMIN")
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/home", true)
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll())
+                .userDetailsService(empleadoDetailsService); // ¡Aquí es donde debe ir!
 
         return http.build();
     }

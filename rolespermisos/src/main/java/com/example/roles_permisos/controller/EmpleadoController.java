@@ -29,12 +29,15 @@ public class EmpleadoController {
 
     // Listar empleados (Accesible por ADMIN y COORDINADOR)
     @Secured({"ROLE_ADMIN", "ROLE_COORDINADOR"}) // Solo ADMIN y COORDINADOR pueden acceder
-    @GetMapping //tipo de peticion GET
+    @GetMapping ("/listar")
     public String listarEmpleados(Model model) { //metodo que recibe un objeto de tipo Model
         model.addAttribute("empleados", empleadoService.findAll()); //llama al metodo findAll de la clase EmpleadoService
         return "empleados/listar"; //devuelve a esa ruta 
     }
-
+@GetMapping
+public String redirectToList() {
+    return "redirect:/empleados/listar";
+}
     // Mostrar formulario de creación (Solo ADMIN)
     @Secured("ROLE_ADMIN") // Solo ADMIN puede acceder
     @GetMapping("/crear") //getMapping para devolver el formulario de creacion
@@ -43,6 +46,7 @@ public class EmpleadoController {
         model.addAttribute("roles", Rol.values()); //agrega los roles al modelo
         return "empleados/crear"; //devuelve a la ruta empleados/crear
     }
+
 
     // Procesar creación de empleado (Solo ADMIN)
     @Secured("ROLE_ADMIN") // Solo ADMIN puede acceder

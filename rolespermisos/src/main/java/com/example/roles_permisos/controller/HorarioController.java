@@ -37,7 +37,7 @@ public class HorarioController {
     }
 
     @Secured("ROLE_ADMIN")
-    @GetMapping
+    @GetMapping 
     public String listarHorarios(Model model) {
         model.addAttribute("horarios", horarioService.listarTodosHorarios());
         return "horarios/listar";
