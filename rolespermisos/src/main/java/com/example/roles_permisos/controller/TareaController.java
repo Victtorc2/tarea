@@ -18,8 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("/tareas")
+@Controller //anotacion que define esta clase como controlador
+@RequestMapping("/tareas") 
 public class TareaController {
 
     private final TareaRepository tareaRepository;

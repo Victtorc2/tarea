@@ -4,18 +4,20 @@
  */
 package com.example.roles_permisos.controller;
 
+import org.apache.tomcat.util.http.FastHttpDateFormat;
+
 /**
  *
  * @author PedroCoronado
  */
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.GetMapping; 
 
 @Controller
-public class DashboardController {
+public class DashboardController { 
 
-    @GetMapping("/admin/dashboard")
+    @GetMapping("/admin/dashboard") 
     public String adminDashboard() {
         return "dashboard/admin";
     }
