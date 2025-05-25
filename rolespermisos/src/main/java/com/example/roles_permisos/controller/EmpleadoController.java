@@ -23,7 +23,7 @@ public class EmpleadoController {
 
     private final EmpleadoService empleadoService;
 
-    public EmpleadoController(EmpleadoService empleadoService) {
+    public EmpleadoController(EmpleadoService empleadoService) { //constructor de la clase EmpleadoController
         this.empleadoService = empleadoService; //llama al constructor de la clase EmpleadoService
     }
 
@@ -57,8 +57,8 @@ public class EmpleadoController {
     @GetMapping("/editar/{id}")
     public String mostrarFormularioEdicion(@PathVariable Long id, Model model) {
         Empleado empleado = empleadoService.findById(id);
-        model.addAttribute("empleado", empleado);
-        model.addAttribute("roles", Rol.values());
+        model.addAttribute("empleado", empleado); //
+        model.addAttribute("roles", Rol.values()); //agrega al modelo un atributo de tipo Rols que contiene todos los roles
         return "empleados/editar";
     }
 
@@ -66,8 +66,8 @@ public class EmpleadoController {
     @Secured("ROLE_ADMIN")
     @PostMapping("/editar/{id}")
     public String actualizarEmpleado(@PathVariable Long id, @ModelAttribute Empleado empleado) {
-        empleado.setId(id);
-        empleadoService.save(empleado);
+        empleado.setId(id); //se le asigna el id al empleado
+        empleadoService.save(empleado); //se guarda el empleado, con el metodo save del servicio empleado
         return "redirect:/empleados";
     }
 
