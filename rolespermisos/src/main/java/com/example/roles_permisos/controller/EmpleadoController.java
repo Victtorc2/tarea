@@ -24,32 +24,32 @@ public class EmpleadoController {
     private final EmpleadoService empleadoService;
 
     public EmpleadoController(EmpleadoService empleadoService) {
-        this.empleadoService = empleadoService;
+        this.empleadoService = empleadoService; //llama al constructor de la clase EmpleadoService
     }
 
     // Listar empleados (Accesible por ADMIN y COORDINADOR)
-    @Secured({"ROLE_ADMIN", "ROLE_COORDINADOR"})
-    @GetMapping
-    public String listarEmpleados(Model model) {
-        model.addAttribute("empleados", empleadoService.findAll());
-        return "empleados/listar";
+    @Secured({"ROLE_ADMIN", "ROLE_COORDINADOR"}) // Solo ADMIN y COORDINADOR pueden acceder
+    @GetMapping //tipo de peticion GET
+    public String listarEmpleados(Model model) { //metodo que recibe un objeto de tipo Model
+        model.addAttribute("empleados", empleadoService.findAll()); //llama al metodo findAll de la clase EmpleadoService
+        return "empleados/listar"; //devuelve a esa ruta 
     }
 
     // Mostrar formulario de creación (Solo ADMIN)
-    @Secured("ROLE_ADMIN")
-    @GetMapping("/crear")
-    public String mostrarFormularioCreacion(Model model) {
-        model.addAttribute("empleado", new Empleado());
-        model.addAttribute("roles", Rol.values());
-        return "empleados/crear";
+    @Secured("ROLE_ADMIN") // Solo ADMIN puede acceder
+    @GetMapping("/crear") //getMapping para devolver el formulario de creacion
+    public String mostrarFormularioCreacion(Model model) { //metodo que recibe un objeto de tipo Model
+        model.addAttribute("empleado", new Empleado()); //crea un nuevo objeto de tipo Empleado
+        model.addAttribute("roles", Rol.values()); //agrega los roles al modelo
+        return "empleados/crear"; //devuelve a la ruta empleados/crear
     }
 
     // Procesar creación de empleado (Solo ADMIN)
-    @Secured("ROLE_ADMIN")
-    @PostMapping("/crear")
-    public String crearEmpleado(@ModelAttribute Empleado empleado) {
-        empleadoService.registrarEmpleado(empleado);
-        return "redirect:/empleados";
+    @Secured("ROLE_ADMIN") // Solo ADMIN puede acceder
+    @PostMapping("/crear") //postMapping es para agregar un nuevo empleado
+    public String crearEmpleado(@ModelAttribute Empleado empleado) { //metodo que recibe un objeto de tipo Empleado
+        empleadoService.registrarEmpleado(empleado);    //llama al metodo registrarEmpleado de la clase EmpleadoService
+        return "redirect:/empleados"; //redirecciona a la lista de empleados
     }
 
     // Mostrar formulario de edición (Solo ADMIN)
