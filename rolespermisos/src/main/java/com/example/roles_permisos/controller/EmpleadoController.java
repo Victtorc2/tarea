@@ -46,7 +46,7 @@ public class EmpleadoController {
 
     // Procesar creación de empleado (Solo ADMIN)
     @Secured("ROLE_ADMIN") // Solo ADMIN puede acceder
-    @PostMapping("/crear") //postMapping es para agregar un nuevo empleado
+    @PostMapping("/crear") //postMapping es para agregar un nuevo empleadogi
     public String crearEmpleado(@ModelAttribute Empleado empleado) { //metodo que recibe un objeto de tipo Empleado
         empleadoService.registrarEmpleado(empleado);    //llama al metodo registrarEmpleado de la clase EmpleadoService
         return "redirect:/empleados"; //redirecciona a la lista de empleados

@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .requestMatchers("/empleados/**").hasRole("ADMIN")
                 .requestMatchers("/horarios/asignar").hasRole("ADMIN")
                 .requestMatchers("/horarios/editar/**").hasRole("COORDINADOR")
-                .requestMatchers("/horarios").hasAnyRole("COORDINADOR", "SECRETARIO")
+                .requestMatchers("/horarios").hasAnyRole("COORDINADOR", "SECRETARIO","ADMIN")
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form

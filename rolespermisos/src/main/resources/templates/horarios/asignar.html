@@ -1,38 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Asignar Horario</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 </head>
 <body>
-    <div class="container mt-4">
-        <h2>Asignar Nuevo Horario</h2>
-            <form th:action="@{/horarios/asignar}" method="post" th:object="${horario}">
-             <div class="form-group">
-                <label for="dia">Día:</label>
-                <input type="text" class="form-control" id="dia" th:field="*{dia}" required>
-            </div>
-            <div class="form-group">
-                <label for="horaInicio">Hora Inicio:</label>
-                <input type="time" class="form-control" id="horaInicio" th:field="*{horaInicio}" required>
-            </div>
-            <div class="form-group">
-                <label for="horaFin">Hora Fin:</label>
-                <input type="time" class="form-control" id="horaFin" th:field="*{horaFin}" required>
-            </div>
-            <div class="form-group">
-                <label for="empleado">Empleado:</label>
-                <select class="form-control" id="empleado" name="empleadoId" required>
-                    <option th:each="empleado : ${empleados}" 
-                            th:value="${empleado.id}"
-                            th:text="${empleado.nombre + ' ' + empleado.apellido + ' (Tareas: ' + empleado.tareas.size() + ')'}">
-                    </option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Asignar Horario</button>
-            <a th:href="@{/horarios}" class="btn btn-secondary">Cancelar</a>
-        </form>
-    </div>
+<div class="container mt-4">
+    <h2>Asignar Nuevo Horario</h2>
+    <form th:action="@{/horarios/asignar}" method="post" th:object="${horario}">
+        <div class="form-group">
+            <label for="dia">Día:</label>
+            <input type="text" class="form-control" id="dia" th:field="*{dia}" required placeholder="Ej: Lunes" />
+        </div>
+        <div class="form-group">
+            <label for="horaInicio">Hora Inicio:</label>
+            <input type="time" class="form-control" id="horaInicio" th:field="*{horaInicio}" required />
+        </div>
+        <div class="form-group">
+            <label for="horaFin">Hora Fin:</label>
+            <input type="time" class="form-control" id="horaFin" th:field="*{horaFin}" required />
+        </div>
+        <div class="form-group">
+            <label for="empleado">Empleado:</label>
+            <select class="form-control" id="empleado" name="empleadoId" required>
+    <option th:each="empleado : ${empleados}"
+            th:value="${empleado.id}"
+            th:text="|${empleado.nombre} |">
+    </option>
+</select>
+
+        </div>
+        <button type="submit" class="btn btn-primary">Asignar Horario</button>
+        <a th:href="@{/horarios}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
 </body>
 </html>
