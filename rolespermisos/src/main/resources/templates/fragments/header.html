@@ -25,7 +25,15 @@
                             <a class="nav-link" th:href="@{/empleados}">Gestión de Empleados</a>
                         </li>
                         <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                            <a class="nav-link" th:href="@{/tareas}"> Gestión de Tareas</a>
+                            <a class="nav-link" th:href="@{/tareas}">Gestión de Tareas</a>
+                        </li>
+
+
+                        <!-- Consulta de tareas para ADMIN, COORDINADOR y SECRETARIO -->
+                        <li class="nav-item"
+                            sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_COORDINADOR', 'ROLE_SECRETARIO')">
+                            <a class="nav-link" th:href="@{/tareas/por-empleado/{id}(id=${usuarioId})}">Consultar
+                                Tareas</a>
                         </li>
                         <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                             <a class="nav-link" th:href="@{/horarios/asignar}">Asignar Horario</a>
@@ -37,7 +45,6 @@
                         <li class="nav-item" sec:authorize="hasAnyRole('ROLE_COORDINADOR', 'ROLE_SECRETARIO')">
                             <a class="nav-link" th:href="@{/empleados/listar}">Ver Empleados</a>
                         </li>
-
                     </ul>
 
                     <form th:action="@{/logout}" method="post" class="d-flex">
