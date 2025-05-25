@@ -23,33 +23,57 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  * @author PedroCoronado
  */
-@Controller // Controlador para manejar horarios de empleados
-@RequestMapping("/horarios") // Ruta base para las operaciones de horarios
-public class HorarioController { // Controlador para manejar horarios de empleados
+@Controller
+@RequestMapping("/horarios")
+public class HorarioController {
+    private final HorarioRepository horarioRepository;
+    private final EmpleadoRepository empleadoRepository;
 
-    private final HorarioRepository horarioRepository; // Repositorio para acceder a los datos de horarios
-    private final EmpleadoRepository empleadoRepository; // Repositorio para acceder a los datos de empleados
-
-    public HorarioController(HorarioRepository horarioRepository, EmpleadoRepository empleadoRepository) { // Constructor que inyecta los repositorios necesarios
-        this.horarioRepository = horarioRepository; // Inicializa el repositorio de horarios
-        this.empleadoRepository = empleadoRepository; // Inicializa el repositorio de empleados
+    public HorarioController(HorarioRepository horarioRepository, EmpleadoRepository empleadoRepository) {
+        this.horarioRepository = horarioRepository;
+        this.empleadoRepository = empleadoRepository;
     }
 
-    // ADMIN puede asignar si el empleado tiene < 5 tareas
-    @Secured("ROLE_ADMIN") // Solo ADMIN puede acceder
-    @Transactional // pra que la base de datos se mantenga consistente  
-    @PostMapping("/asignar") // Asignar horario a un empleado
-    public String asignarHorario(@ModelAttribute Horario horario, @RequestParam Long empleadoId) { // Método para asignar un horario a un empleado
-        Empleado empleado = empleadoRepository.findById(empleadoId) // Busca el empleado por ID en el repositorio y lo asigna a la variable empleado
-                .orElseThrow(() -> new IllegalArgumentException("Empleado no encontrado")); // Si no se encuentra el empleado, lanza una excepción
+    // Método GET para mostrar formulario
+    @Secured("ROLE_ADMIN")
+@GetMapping("/asignar")
+public String mostrarFormularioAsignar(Model model) {
+    System.out.println("DEBUG: Entrando a GET /horarios/asignar"); // Log de diagnóstico
+    
+    List<Empleado> empleados = empleadoRepository.findAll();
+    System.out.println("DEBUG: Número de empleados encontrados: " + empleados.size());
+    
+    model.addAttribute("horario", new Horario());
+    model.addAttribute("empleados", empleados);
+    return "horarios/asignar";
+}
 
-        if (empleado.getTareas().size() >= 5) { // Verifica si el empleado ya tiene 5 tareas asignadas
-            throw new IllegalStateException("Empleado ya tiene 5 tareas asignadas."); // Si es así, lanza una excepción
+    // Método POST para procesar formulario
+    @Secured("ROLE_ADMIN")
+    @Transactional
+    @PostMapping("/asignar")
+    public String asignarHorario(@Valid @ModelAttribute("horario") Horario horario, 
+                               BindingResult result,
+                               @RequestParam Long empleadoId,
+                               Model model) {
+        
+        if(result.hasErrors()) {
+            model.addAttribute("empleados", empleadoRepository.findAll());
+            return "horarios/asignar";
         }
 
-        horario.setEmpleado(empleado); // al horario se le asigna el empleado
-        horarioRepository.save(horario); // llama al metodo save del repositorio de horarios para guardar el horario en la base de datos
-        return "redirect:/horarios"; //devuelve a la lista de horarios
+        Empleado empleado = empleadoRepository.findById(empleadoId)
+                .orElseThrow(() -> new IllegalArgumentException("Empleado no encontrado"));
+
+        if (empleado.getTareas().size() >= 5) {
+            model.addAttribute("error", "El empleado ya tiene 5 tareas asignadas");
+            model.addAttribute("empleados", empleadoRepository.findAll());
+            return "horarios/asignar";
+        }
+
+        horario.setEmpleado(empleado);
+        horarioRepository.save(horario);
+        return "redirect:/horarios";
     }
 
     // COORDINADOR y SECRETARIO: ver todos los horarios
